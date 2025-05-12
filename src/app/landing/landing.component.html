@@ -1,0 +1,8 @@
+<h2>Latest Additions</h2>
+<div class="games-grid">
+    <div class="game-card" *ngFor="let game of games">
+        <h3>{{ game.title }}</h3>
+        <p>{{ game.description }}</p>
+        <small>Slug: {{ game.slug }}</small>
+    </div>
+</div>
