@@ -19,7 +19,7 @@ import { CommonModule } from '@angular/common';
 export class LoginComponent {
   loginForm: FormGroup;
   error: string | null = null;
-  success: boolean = false; // ✅ NEW
+  success: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -41,10 +41,16 @@ export class LoginComponent {
     const { username, password } = this.loginForm.value;
 
     this.auth.login(username, password).subscribe({
-      next: () => {
+      next: (response) => {
         this.success = true;
-        // Optional: delay navigation to let user see the success message
-        setTimeout(() => this.router.navigate(['/games']), 1000);
+
+        const user = {
+          username: response.username,
+          role: response.isAdmin ? 'admin' : 'user',
+        };
+        localStorage.setItem('user', JSON.stringify(user));
+
+        setTimeout(() => this.router.navigate(['/games']), 500);
       },
       error: (err) => {
         this.error = err.error?.message || 'Login failed';

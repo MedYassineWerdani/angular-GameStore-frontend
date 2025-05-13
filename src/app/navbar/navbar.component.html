@@ -1,0 +1,8 @@
+<nav class="navbar">
+    <a routerLink="/games">Games</a>
+    <a *ngIf="isAdmin" routerLink="/admin">Admin Dashboard</a>
+    <a *ngIf="isAdmin" routerLink="/admin/create">Create Game</a>
+    <a routerLink="/login" (click)="logout()">Logout</a>
+
+    <span class="user-info">Logged in as: {{ username }}</span>
+</nav>
