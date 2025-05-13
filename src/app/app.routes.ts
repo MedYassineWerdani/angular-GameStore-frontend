@@ -12,4 +12,5 @@ export const routes: Routes = [
   { path: 'games/:slug', component: GameDetailsComponent },
   { path: 'admin', component: AdminDashboardComponent },
   { path: 'admin/edit/:slug', component: EditGameComponent },
+  { path: 'admin/create', component: EditGameComponent },
 ];
