@@ -1,0 +1,23 @@
+<div *ngIf="game" class="game-details">
+    <h1>{{ game.title }}</h1>
+    <img [src]="game.image" alt="{{ game.title }}" />
+
+    <p><strong>Description:</strong> {{ game.description }}</p>
+    <p><strong>Price:</strong> ${{ game.price }}</p>
+    <p><strong>Release Date:</strong> {{ game.releaseDate | date }}</p>
+
+    <p><strong>Tags:</strong>
+        <span *ngFor="let tag of game.tags; let last = last">
+            {{ tag }}<span *ngIf="!last">, </span>
+        </span>
+    </p>
+
+    <p><strong>Platforms:</strong>
+        <span *ngFor="let platform of game.platform; let last = last">
+            {{ platform }}<span *ngIf="!last">, </span>
+        </span>
+    </p>
+
+    <p *ngIf="game.genre"><strong>Genre:</strong> {{ game.genre }}</p>
+    <p *ngIf="game.developer"><strong>Developer:</strong> {{ game.developer }}</p>
+</div>

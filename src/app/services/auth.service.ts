@@ -12,7 +12,7 @@ export class AuthService {
   login(username: string, password: string) {
     return this.http
       .post<{ token: string; isAdmin: boolean; username: string }>(
-        '/api/auth/login',
+        'http://localhost:5000/api/auth/login',
         { username, password }
       )
       .pipe(

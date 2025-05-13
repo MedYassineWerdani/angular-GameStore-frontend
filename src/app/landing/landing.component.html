@@ -1,12 +1,10 @@
 <h2>Latest Additions</h2>
 <div class="games-grid">
-    <div class="game-card" *ngFor="let game of games">
+    <a class="game-card" *ngFor="let game of games" [routerLink]="['/games', game.slug]">
         <img [src]="game.image" alt="{{ game.title }}" class="game-image" />
         <h3>{{ game.title }}</h3>
-        <p>{{ game.description }}</p>
-        <p><strong>Price:</strong> ${{ game.price }}</p> <!-- Price added here -->
-        <!-- <small>Slug: {{ game.slug }}</small> -->
-    </div>
+        <p><strong>Price:</strong> ${{ game.price }}</p>
+    </a>
 </div>
 
 <div class="pagination">

@@ -1,0 +1,73 @@
+<h2>{{ isEditMode ? 'Edit Game' : 'Create Game' }}</h2>
+
+<form [formGroup]="gameForm" (ngSubmit)="onSubmit()">
+    <!-- Title -->
+    <label>
+        Title:
+        <input type="text" formControlName="title" />
+    </label>
+    <div *ngIf="gameForm.get('title')?.touched && gameForm.get('title')?.invalid">
+        <small *ngIf="gameForm.get('title')?.hasError('required')">Title is required.</small>
+        <small *ngIf="gameForm.get('title')?.hasError('minlength')">Minimum 3 characters.</small>
+    </div>
+
+    <!-- Description -->
+    <label>
+        Description:
+        <textarea formControlName="description"></textarea>
+    </label>
+    <div *ngIf="gameForm.get('description')?.touched && gameForm.get('description')?.invalid">
+        <small *ngIf="gameForm.get('description')?.hasError('required')">Description is required.</small>
+    </div>
+
+    <!-- Price -->
+    <label>
+        Price:
+        <input type="number" formControlName="price" />
+    </label>
+    <div *ngIf="gameForm.get('price')?.touched && gameForm.get('price')?.invalid">
+        <small *ngIf="gameForm.get('price')?.hasError('required')">Price is required.</small>
+        <small *ngIf="gameForm.get('price')?.hasError('min')">Price must be at least 0.</small>
+    </div>
+
+    <!-- Image URL -->
+    <label>
+        Image URL:
+        <input type="text" formControlName="image" />
+    </label>
+
+    <!-- Genre -->
+    <label>
+        Genre:
+        <input type="text" formControlName="genre" />
+    </label>
+
+    <!-- Tags -->
+    <label>
+        Tags (comma-separated):
+        <input type="text" formControlName="tags" />
+    </label>
+
+    <!-- Platform -->
+    <label>
+        Platform:
+        <input type="text" formControlName="platform" />
+    </label>
+
+    <!-- Developer -->
+    <label>
+        Developer:
+        <input type="text" formControlName="developer" />
+    </label>
+
+    <!-- Release Date -->
+    <label>
+        Release Date:
+        <input type="date" formControlName="releaseDate" />
+    </label>
+
+    <!-- Submit Button -->
+    <button type="submit" [disabled]="gameForm.invalid">
+        {{ isEditMode ? 'Update Game' : 'Create Game' }}
+    </button>
+</form>

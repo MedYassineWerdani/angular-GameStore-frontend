@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { GameService } from '../services/game.service'; // Import the GameService
-import { GameResponse } from '../models/game-response.model'; // Import the model
+import { RouterModule } from '@angular/router';
+import { GameService } from '../services/game.service';
+import { GameResponse } from '../models/game-response.model';
 
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [CommonModule, HttpClientModule],
+  imports: [CommonModule, HttpClientModule, RouterModule],
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.css'],
 })
@@ -16,7 +17,7 @@ export class LandingComponent implements OnInit {
   totalPages: number = 1;
   currentPage: number = 1;
 
-  constructor(private gameService: GameService) {} // Inject GameService
+  constructor(private gameService: GameService) {}
 
   ngOnInit() {
     this.loadGames();
@@ -30,7 +31,6 @@ export class LandingComponent implements OnInit {
     });
   }
 
-  // Methods to navigate pages
   nextPage() {
     if (this.currentPage < this.totalPages) {
       this.loadGames(this.currentPage + 1);
