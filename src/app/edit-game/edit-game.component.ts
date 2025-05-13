@@ -4,6 +4,7 @@ import {
   FormGroup,
   Validators,
   ReactiveFormsModule,
+  FormArray,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GameService } from '../services/game.service';
@@ -19,6 +20,14 @@ export class EditGameComponent implements OnInit {
   gameForm!: FormGroup;
   isEditMode: boolean = false;
   slug: string | null = null;
+
+  availablePlatforms = [
+    'Sony PlayStation',
+    'Xbox Series',
+    'Nintendo Switch',
+    'PC',
+  ];
+  availableTags = ['Action', 'RPG', 'Adventure', 'Multiplayer'];
 
   constructor(
     private fb: FormBuilder,
@@ -37,8 +46,10 @@ export class EditGameComponent implements OnInit {
       price: [0, [Validators.required, Validators.min(0)]],
       image: [''],
       genre: [''],
-      tags: [''],
-      platform: [''],
+      tags: this.fb.array(this.availableTags.map(() => this.fb.control(false))),
+      platforms: this.fb.array(
+        this.availablePlatforms.map(() => this.fb.control(false))
+      ),
       developer: [''],
       releaseDate: [''],
     });
@@ -51,22 +62,45 @@ export class EditGameComponent implements OnInit {
           price: game.price,
           image: game.image,
           genre: game.genre,
-          tags: (game.tags || []).join(', '),
-          platform: game.platforms,
           developer: game.developer,
           releaseDate: game.releaseDate?.substring(0, 10),
         });
+
+        this.patchCheckboxArray(game.tags ?? [], this.availableTags, 'tags');
+        this.patchCheckboxArray(
+          game.platforms ?? [],
+          this.availablePlatforms,
+          'platforms'
+        );
       });
     }
+  }
+
+  patchCheckboxArray(
+    values: string[],
+    available: string[],
+    controlName: string
+  ) {
+    const formArray = this.gameForm.get(controlName) as FormArray;
+    available.forEach((item, i) => {
+      formArray.at(i).setValue(values.includes(item));
+    });
   }
 
   onSubmit() {
     if (this.gameForm.invalid) return;
 
-    const formValue = this.gameForm.value;
+    const selectedTags = this.availableTags.filter(
+      (_, i) => this.gameForm.value.tags[i]
+    );
+    const selectedPlatforms = this.availablePlatforms.filter(
+      (_, i) => this.gameForm.value.platforms[i]
+    );
+
     const payload = {
-      ...formValue,
-      tags: formValue.tags.split(',').map((t: string) => t.trim()),
+      ...this.gameForm.value,
+      tags: selectedTags,
+      platforms: selectedPlatforms,
     };
 
     if (this.isEditMode && this.slug) {

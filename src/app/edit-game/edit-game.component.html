@@ -43,16 +43,26 @@
     </label>
 
     <!-- Tags -->
-    <label>
-        Tags (comma-separated):
-        <input type="text" formControlName="tags" />
-    </label>
+    <label>Tags:</label>
+    <div formArrayName="tags">
+        <div *ngFor="let tag of availableTags; let i = index">
+            <label>
+                <input type="checkbox" [formControlName]="i" />
+                {{ tag }}
+            </label>
+        </div>
+    </div>
 
-    <!-- Platform -->
-    <label>
-        Platform:
-        <input type="text" formControlName="platform" />
-    </label>
+    <!-- Platforms -->
+    <label>Platforms:</label>
+    <div formArrayName="platforms">
+        <div *ngFor="let platform of availablePlatforms; let i = index">
+            <label>
+                <input type="checkbox" [formControlName]="i" />
+                {{ platform }}
+            </label>
+        </div>
+    </div>
 
     <!-- Developer -->
     <label>
