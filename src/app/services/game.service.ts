@@ -26,8 +26,12 @@ export class GameService {
     return this.http.delete(`${this.apiUrl}/${slug}`, { headers });
   }
 
-  createGame(game: Game): Observable<Game> {
-    return this.http.post<Game>(this.apiUrl, game);
+  createGame(gameData: any): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    return this.http.post(this.apiUrl, gameData, { headers });
   }
 
   updateGame(slug: string, gameData: any): Observable<any> {
